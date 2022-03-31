@@ -2,7 +2,11 @@
 	<div class="border-start h-100 p-2 d-flex flex-column">
 		<h2 class="text-center">Carrito</h2>
 		<div class="flex-grow-1">
-			<div v-for="(producto, i) in productos" :key="i" class="row gx-0">
+			<div
+				v-for="(producto, i) in productos"
+				:key="i"
+				class="row gx-0 producto-carrito"
+			>
 				<div class="col">{{ producto.nombre }}</div>
 				<div class="col-3">${{ producto.precio }}</div>
 				<div class="col-1 boton-quitar" @click="quitar(i)">X</div>
@@ -20,6 +24,7 @@
 
 <script>
 import { store } from "@/store.js";
+import $ from "jquery";
 
 export default {
 	name: "PVCarrito",
@@ -49,6 +54,9 @@ export default {
 		},
 	},
 	mounted,
+	updated: function () {
+		$(".producto-carrito").hide().show("slow").removeClass("producto-carrito");
+	},
 };
 
 async function mounted() {

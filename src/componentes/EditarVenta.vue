@@ -11,13 +11,15 @@
 		<div>
 			<label>Productos: </label>
 			<div>
-				<div v-for="(producto, i) in productosActuales" :key="i" class="d-flex">
+				<div
+					v-for="(producto, i) in productosActuales"
+					:key="i"
+					class="d-flex w-25 justify-content-between"
+				>
 					<div>
 						{{ producto.nombre }}
 					</div>
-					<div>
-						{{ producto.precio }}
-					</div>
+					<div>${{ producto.precio }}</div>
 					<button @click="borrar(i)">Borrar</button>
 				</div>
 			</div>

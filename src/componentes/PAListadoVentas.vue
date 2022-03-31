@@ -5,9 +5,6 @@
 				<button class="btn btn-primary" @click="volver">Volver</button>
 			</div>
 			<h1 class="col">{{ titulo }}</h1>
-			<div class="col-2">
-				<button class="btn btn-success">Añadir nuevo</button>
-			</div>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-sm">
@@ -23,8 +20,12 @@
 							{{ valor[key] }}
 						</td>
 						<td>
-							<button class="btn btn-primary">Editar</button>
-							<button class="btn btn-danger">Borrar</button>
+							<button class="btn btn-primary" @click="editar(valor.id)">
+								Editar
+							</button>
+							<button class="btn btn-danger" @click="borrar(valor.id)">
+								Borrar
+							</button>
 						</td>
 					</tr>
 				</tbody>
@@ -34,29 +35,25 @@
 </template>
 
 <script>
-import { store } from "@/store.js";
-
 export default {
-	name: "PAListado",
-	props: ["cat"],
+	name: "PAListadoVentas",
 	data: () => ({
-		seleccionado: null,
 		valores: [],
+		titulo: "Ventas",
+		keys: ["id", "nombre"],
 	}),
-	computed: {
-		keys() {
-			if (this.valores.length > 0) {
-				return Object.keys(this.valores[0]).filter((v) => v != "_id");
-			}
-			return [];
-		},
-		titulo() {
-			return this.cat.charAt(0).toUpperCase() + this.cat.slice(1);
-		},
-	},
 	methods: {
 		volver() {
-			store.app.admin.cambiaSeleccion("inicio");
+			this.$router.push("/administracion");
+		},
+		async borrar(id) {
+			await fetch(`/api/v1/ventas/${id}`, {
+				method: "DELETE",
+			});
+			this.$router.go();
+		},
+		editar(id) {
+			this.$router.push(`/administracion/editarCategoria/${id}`);
 		},
 	},
 	mounted,
@@ -64,7 +61,7 @@ export default {
 
 async function mounted() {
 	try {
-		const respuesta = await fetch(`/api/v1/${this.cat}`);
+		const respuesta = await fetch(`/api/v1/ventas`);
 		if (respuesta.ok) {
 			const valores = await respuesta.json();
 			this.valores = valores;
@@ -79,8 +76,4 @@ async function mounted() {
 }
 </script>
 
-<style scoped lang="scss">
-tbody > tr {
-	cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>

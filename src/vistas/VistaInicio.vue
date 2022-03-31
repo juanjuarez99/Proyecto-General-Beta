@@ -31,6 +31,7 @@
 				<div v-if="mensaje" class="text-danger bg-white">{{ mensaje }}</div>
 			</div>
 			<form
+				id="formulario-inicio"
 				class="d-flex flex-column w-50 mx-auto"
 				@submit="checarCredenciales"
 			>
@@ -58,6 +59,7 @@
 
 <script>
 import { store } from "@/store.js";
+import $ from "jquery";
 
 export default {
 	name: "VistaInicio",
@@ -99,6 +101,9 @@ export default {
 				return;
 			}
 		},
+	},
+	mounted: function () {
+		$("#formulario-inicio").hide().fadeIn(1000);
 	},
 };
 </script>

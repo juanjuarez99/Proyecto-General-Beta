@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Encabezado titulo="Cobrar" />
-		<div class="">
+		<div id="ticket">
 			<h1 class="text-center m-3">Lista de Productos</h1>
 			<div class="text-center w-25 m-auto">
 				<div v-for="(producto, i) in productos" :key="i" class="d-flex">
@@ -23,6 +23,7 @@
 <script>
 import Encabezado from "../componentes/Encabezado";
 import { store } from "@/store.js";
+import $ from "jquery";
 
 export default {
 	name: "VistaCobrar",
@@ -76,6 +77,9 @@ export default {
 		},
 	},
 	mounted,
+	updated: function () {
+		$("#ticket").hide().slideDown(3000);
+	},
 };
 
 async function mounted() {

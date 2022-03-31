@@ -44,7 +44,6 @@
 
 <script>
 import TarjetaCategoria from "./TarjetaCategoria";
-import { store } from "@/store.js";
 
 export default {
 	name: "PAInicio",
@@ -56,7 +55,7 @@ export default {
 			this.$router.push("/puntodeventa");
 		},
 		cambiarSeleccion(seleccion) {
-			store.app.admin.cambiaSeleccion(seleccion);
+			this.$router.push(`/administracion/${seleccion}`);
 		},
 	},
 };

@@ -17,7 +17,12 @@
 				<tbody>
 					<tr v-for="valor in valores" :key="valor.id">
 						<td v-for="(key, i) in keys" :key="i">
-							{{ valor[key] }}
+							<span v-if="key != 'fecha'">
+								{{ valor[key] }}
+							</span>
+							<span v-else>
+								{{ new Date(valor[key]).toLocaleString() }}
+							</span>
 						</td>
 						<td>
 							<button class="btn btn-primary" @click="editar(valor.id)">
@@ -40,7 +45,7 @@ export default {
 	data: () => ({
 		valores: [],
 		titulo: "Ventas",
-		keys: ["id", "nombre"],
+		keys: ["id", "usuario", "fecha", "productos"],
 	}),
 	methods: {
 		volver() {
@@ -53,7 +58,7 @@ export default {
 			this.$router.go();
 		},
 		editar(id) {
-			this.$router.push(`/administracion/editarCategoria/${id}`);
+			this.$router.push(`/administracion/editarVenta/${id}`);
 		},
 	},
 	mounted,

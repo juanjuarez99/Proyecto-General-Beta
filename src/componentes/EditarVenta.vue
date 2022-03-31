@@ -2,7 +2,7 @@
 	<div class="container p-2">
 		<div>
 			<label>Fecha y Hora: </label>
-			<input v-model="nombre" type="datetime-local" />
+			<input v-model="fecha" type="datetime-local" disabled />
 		</div>
 		<div>
 			<label>Usuario: </label>
@@ -11,12 +11,12 @@
 		<div>
 			<label>Productos: </label>
 			<div>
-				<div v-for="(i, producto) in productos" :key="i">
+				<div v-for="(producto, i) in productosActuales" :key="i" class="d-flex">
 					<div>
-						{{ productoActual(producto).nombre }}
+						{{ producto.nombre }}
 					</div>
 					<div>
-						{{ productoActual(producto).precio }}
+						{{ producto.precio }}
 					</div>
 					<button @click="borrar(i)">Borrar</button>
 				</div>
@@ -37,9 +37,22 @@ export default {
 		id: "",
 		productosDisponibles: [],
 	}),
+	computed: {
+		productosActuales() {
+			return this.productosDisponibles.filter((pd) => {
+				let contiene = false;
+				this.productos.forEach((p) => {
+					if (p.id === pd.id) {
+						contiene = true;
+					}
+				});
+				return contiene;
+			});
+		},
+	},
 	methods: {
-		productoActual(p) {
-			return this.productosDisponibles((pd) => pd.id === p)[0];
+		borrar(i) {
+			this.productos.splice(i, 1);
 		},
 		async editar() {
 			const respuesta = await fetch(`/api/v1/ventas/${this.id}`, {
@@ -68,17 +81,14 @@ export default {
 async function mounted() {
 	try {
 		const respuesta = await fetch(`/api/v1/ventas/${this.$route.params.id}`);
-		if (respuesta.ok) {
-			const valores = await respuesta.json();
-			this.id = valores.id;
-			this.usuario = valores.usuario;
-			const r2 = await fetch(`/api/v1/productos`);
-			if (r2.ok) {
-				this.productosDisponibles = await r2.json();
-			}
-		} else {
-			this.mensaje = "Ocurrió un error al conectar con la base de datos";
-			return;
+		const valores = await respuesta.json();
+		this.id = valores.id;
+		this.usuario = valores.usuario;
+		this.fecha = valores.fecha;
+		this.productos = valores.productos;
+		const r2 = await fetch(`/api/v1/productos`);
+		if (r2.ok) {
+			this.productosDisponibles = await r2.json();
 		}
 	} catch (_) {
 		this.mensaje = "Ocurrió un error al conectar con la base de datos";

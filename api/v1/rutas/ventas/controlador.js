@@ -1,12 +1,12 @@
 const bd = require("../../basedatos");
-const COLECCION = "usuarios";
+const COLECCION = "ventas";
 
 exports.get = async (req, res) => {
 	try {
 		await bd.connect();
 		const respuesta = await bd.db("cafeteria").collection(COLECCION).find({});
-		const usuarios = await respuesta.toArray();
-		res.send(usuarios);
+		const ventas = await respuesta.toArray();
+		res.send(ventas);
 		await bd.close();
 	} catch (error) {
 		res.send({ error });

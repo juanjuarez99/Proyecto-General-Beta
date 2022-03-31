@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div class="col-9">
-			<PVCategorias v-if="vista == 'categorias'" :categorias="categorias" />
+			<PVCategorias v-if="vista == 'categorias'" />
 			<PVProductos v-else :categoria="vista" />
 		</div>
 		<div class="col-3">
@@ -20,7 +20,6 @@ import PVCarrito from "./PVCarrito";
 export default {
 	name: "VistaPuntoVenta",
 	data: () => ({
-		categorias: store.categorias,
 		productos: store.productos,
 	}),
 	computed: {

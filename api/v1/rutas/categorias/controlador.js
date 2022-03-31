@@ -1,12 +1,12 @@
 const bd = require("../../basedatos");
-const COLECCION = "usuarios";
+const COLECCION = "categorias";
 
 exports.get = async (req, res) => {
 	try {
 		await bd.connect();
 		const respuesta = await bd.db("cafeteria").collection(COLECCION).find({});
-		const usuarios = await respuesta.toArray();
-		res.send(usuarios);
+		const categorias = await respuesta.toArray();
+		res.send(categorias);
 		await bd.close();
 	} catch (error) {
 		res.send({ error });
@@ -63,6 +63,21 @@ exports.del = async (req, res) => {
 			.collection(COLECCION)
 			.findOneAndDelete({ id: req.params.id });
 		res.send(respuesta);
+		await bd.close();
+	} catch (error) {
+		res.send({ error });
+	}
+};
+
+exports.getProductos = async (req, res) => {
+	try {
+		await bd.connect();
+		const respuesta = await bd
+			.db("cafeteria")
+			.collection("productos")
+			.find({ categoria: req.params.id });
+		const productos = await respuesta.toArray();
+		res.send(productos);
 		await bd.close();
 	} catch (error) {
 		res.send({ error });

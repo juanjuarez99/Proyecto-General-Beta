@@ -39,7 +39,7 @@ export default {
 	}),
 	methods: {
 		productoActual(p) {
-			return this.productosDisponibles(pd => pd.id === p)[0];
+			return this.productosDisponibles((pd) => pd.id === p)[0];
 		},
 		async editar() {
 			const respuesta = await fetch(`/api/v1/ventas/${this.id}`, {
@@ -50,7 +50,7 @@ export default {
 				body: JSON.stringify({
 					nombre: this.nombre,
 					fecha: this.fecha,
-					productos: this.productos
+					productos: this.productos,
 					id: this.id,
 				}),
 			});
@@ -67,16 +67,14 @@ export default {
 
 async function mounted() {
 	try {
-		const respuesta = await fetch(
-			`/api/v1/ventas/${this.$route.params.id}`
-		);
+		const respuesta = await fetch(`/api/v1/ventas/${this.$route.params.id}`);
 		if (respuesta.ok) {
 			const valores = await respuesta.json();
 			this.id = valores.id;
 			this.usuario = valores.usuario;
-			const r2 = await fetch(`/api/v1/productos`)
+			const r2 = await fetch(`/api/v1/productos`);
 			if (r2.ok) {
-				this.productosDisponibles = await r2.json()
+				this.productosDisponibles = await r2.json();
 			}
 		} else {
 			this.mensaje = "Ocurrió un error al conectar con la base de datos";

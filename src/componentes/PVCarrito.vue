@@ -11,7 +11,7 @@
 		<div v-if="total">
 			{{ total }}
 			<br />
-			<button class="btn btn-success">Realizar compra</button>
+			<button class="btn btn-success" @click="CobrarProductos">Realizar compra</button>
 		</div>
 	</div>
 </template>
@@ -38,7 +38,11 @@ export default {
 		quitar(i) {
 			store.app.puntoventa.quitarDeCarrito(i);
 		},
+		CobrarProductos() {
+			this.$router.push("/cobrar")
+		},	
 	},
+	
 };
 </script>
 

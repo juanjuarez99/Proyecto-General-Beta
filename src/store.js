@@ -3,6 +3,16 @@ import { reactive } from "vue";
 
 export const store = reactive({
 	app: {
+		usuario: {
+			tipo: "",
+			id: "",
+			cambiarTipo(tipo) {
+				this.tipo = tipo;
+			},
+			cambiarId(id) {
+				this.id = id;
+			},
+		},
 		admin: {
 			seleccion: "inicio",
 			cambiaSeleccion(seleccion) {

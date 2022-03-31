@@ -2,6 +2,13 @@
 	<div>
 		<h1 class="text-center">Categorias</h1>
 		<div class="row row-cols-3 g-5 p-3">
+			<div v-if="tipoUsuario == 'Administrador'">
+				<TarjetaCategoria
+					nombre="Volver"
+					imagen="https://source.unsplash.com/random/100x100"
+					@click="volver()"
+				/>
+			</div>
 			<div v-for="categoria in categorias" :key="categoria.id">
 				<TarjetaCategoria
 					:nombre="categoria.nombre"
@@ -25,10 +32,14 @@ export default {
 	},
 	data: () => ({
 		categorias: [],
+		tipoUsuario: store.app.usuario.tipo,
 	}),
 	methods: {
 		cambiaVista(vista) {
 			store.app.puntoventa.cambiaVista(vista);
+		},
+		volver() {
+			this.$router.push("/administracion");
 		},
 	},
 	mounted,

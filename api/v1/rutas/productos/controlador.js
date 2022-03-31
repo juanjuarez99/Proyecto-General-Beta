@@ -55,6 +55,20 @@ exports.put = async (req, res) => {
 	}
 };
 
+exports.menosUno = async (req, res) => {
+	try {
+		await bd.connect();
+		const respuesta = await bd
+			.db("cafeteria")
+			.collection(COLECCION)
+			.updateOne({ id: req.params.id }, { $inc: { stock: -1 } });
+		res.send(respuesta);
+		await bd.close();
+	} catch (error) {
+		res.send({ error });
+	}
+};
+
 exports.del = async (req, res) => {
 	try {
 		await bd.connect();

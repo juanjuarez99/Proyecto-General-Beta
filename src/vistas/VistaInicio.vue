@@ -81,11 +81,8 @@ export default {
 						return;
 					}
 
-					const r2 = await fetch("/api/v1/categorias");
-					if (r2.ok) {
-						const categorias = await r2.json();
-						store.anadirCategorias(categorias);
-					}
+					store.app.usuario.cambiarTipo(usuario.tipo);
+					store.app.usuario.cambiarId(usuario.id);
 
 					if (usuario.tipo === "Administrador") {
 						this.$router.push("/administracion");

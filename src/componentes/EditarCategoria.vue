@@ -4,6 +4,10 @@
 			<label>Nombre: </label>
 			<input v-model="nombre" />
 		</div>
+		<div>
+			<label>Imagen: </label>
+			<input v-model="imagen" />
+		</div>
 		<button @click="editar">Editar</button>
 		<button @click="cancelar">Cancelar</button>
 	</div>
@@ -14,6 +18,7 @@ export default {
 	name: "EditarCategoria",
 	data: () => ({
 		nombre: "",
+		imagen: "",
 		id: "",
 	}),
 	methods: {
@@ -25,6 +30,7 @@ export default {
 				},
 				body: JSON.stringify({
 					nombre: this.nombre,
+					imagen: this.imagen,
 					id: this.id,
 				}),
 			});
@@ -48,6 +54,7 @@ async function mounted() {
 			const valores = await respuesta.json();
 			this.id = valores.id;
 			this.nombre = valores.nombre;
+			this.imagen = valores.imagen;
 		} else {
 			this.mensaje = "Ocurrió un error al conectar con la base de datos";
 			return;

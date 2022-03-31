@@ -43,7 +43,7 @@ export default {
 	data: () => ({
 		valores: [],
 		titulo: "Productos",
-		keys: ["id", "nombre", "stock", "categoria", "imagen"],
+		keys: ["id", "nombre", "stock", "categoria", "imagen", "precio"],
 	}),
 	methods: {
 		volver() {

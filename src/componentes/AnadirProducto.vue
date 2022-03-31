@@ -10,6 +10,10 @@
 				<input v-model="nombre" />
 			</div>
 			<div>
+				<label>Precio: </label>
+				<input v-model="precio" type="number" />
+			</div>
+			<div>
 				<label>Categoria: </label>
 				<select v-model="categoria">
 					<option
@@ -43,6 +47,7 @@ export default {
 		stock: "",
 		categoria: "",
 		imagen: "",
+		precio: "",
 		id: "",
 		categorias: [],
 	}),
@@ -58,6 +63,7 @@ export default {
 					stock: this.stock,
 					categoria: this.categoria,
 					imagen: this.imagen,
+					precio: this.precio,
 					id: this.id,
 				}),
 			});

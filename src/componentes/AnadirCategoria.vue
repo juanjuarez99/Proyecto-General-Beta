@@ -9,6 +9,10 @@
 				<label>Nombre: </label>
 				<input v-model="nombre" />
 			</div>
+			<div>
+				<label>Imagen: </label>
+				<input v-model="imagen" />
+			</div>
 			<input type="submit" value="Añadir" />
 			<button @click="cancelar">Cancelar</button>
 		</form>
@@ -20,6 +24,7 @@ export default {
 	name: "AnadirCategoria",
 	data: () => ({
 		nombre: "",
+		imagen: "",
 		id: "",
 	}),
 	methods: {
@@ -31,6 +36,7 @@ export default {
 				},
 				body: JSON.stringify({
 					nombre: this.nombre,
+					imagen: this.imagen,
 					id: this.id,
 				}),
 			});

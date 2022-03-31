@@ -43,7 +43,7 @@ export default {
 	data: () => ({
 		valores: [],
 		titulo: "Categorias",
-		keys: ["id", "nombre"],
+		keys: ["id", "nombre", "imagen"],
 	}),
 	methods: {
 		volver() {

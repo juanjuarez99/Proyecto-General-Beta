@@ -11,7 +11,9 @@
 		<div v-if="total">
 			{{ total }}
 			<br />
-			<button class="btn btn-success" @click="CobrarProductos">Realizar compra</button>
+			<button class="btn btn-success" @click="CobrarProductos">
+				Realizar compra
+			</button>
 		</div>
 	</div>
 </template>
@@ -21,10 +23,14 @@ import { store } from "@/store.js";
 
 export default {
 	name: "PVCarrito",
+	data: () => ({
+		productosDisponibles: [],
+	}),
 	computed: {
 		productos() {
 			return store.app.puntoventa.carrito.map(
-				(p) => store.productos.filter((producto) => producto.id === p)[0]
+				(p) =>
+					this.productosDisponibles.filter((producto) => producto.id === p)[0]
 			);
 		},
 		total() {
@@ -39,11 +45,27 @@ export default {
 			store.app.puntoventa.quitarDeCarrito(i);
 		},
 		CobrarProductos() {
-			this.$router.push("/cobrar")
-		},	
+			this.$router.push("/cobrar");
+		},
 	},
-	
+	mounted,
 };
+
+async function mounted() {
+	try {
+		const respuesta = await fetch(`/api/v1/productos`);
+		if (respuesta.ok) {
+			const valores = await respuesta.json();
+			this.productosDisponibles = valores;
+		} else {
+			this.mensaje = "Ocurrió un error al conectar con la base de datos";
+			return;
+		}
+	} catch (err) {
+		this.mensaje = "Ocurrió un error al conectar con la base de datos";
+		return;
+	}
+}
 </script>
 
 <style scoped lang="scss">

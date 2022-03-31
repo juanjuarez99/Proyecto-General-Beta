@@ -36,10 +36,15 @@ export default {
 
 async function mounted() {
 	try {
-		const respuesta = await fetch(`/api/v1/categorias`);
-		if (respuesta.ok) {
-			const valores = await respuesta.json();
-			this.categorias = valores;
+		const r2 = await fetch("/api/v1/categorias");
+		if (r2.ok) {
+			const categorias = await r2.json();
+			store.anadirCategorias(categorias);
+			const respuesta = await fetch(`/api/v1/categorias`);
+			if (respuesta.ok) {
+				const valores = await respuesta.json();
+				this.categorias = valores;
+			}
 		} else {
 			this.mensaje = "Ocurrió un error al conectar con la base de datos";
 			return;

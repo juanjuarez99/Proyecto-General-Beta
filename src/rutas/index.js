@@ -14,6 +14,9 @@ import PAListadoVentas from "../componentes/PAListadoVentas.vue";
 import EditarUsuario from "../componentes/EditarUsuario.vue";
 import AnadirUsuario from "../componentes/AnadirUsuario.vue";
 
+import EditarProducto from "../componentes/EditarProducto.vue";
+import AnadirProducto from "../componentes/AnadirProducto.vue";
+
 const rutas = [
 	{
 		path: "/",
@@ -45,6 +48,14 @@ const rutas = [
 				component: PAListadoUsuarios,
 			},
 			{
+				path: "editarUsuario/:id",
+				component: EditarUsuario,
+			},
+			{
+				path: "anadirUsuario",
+				component: AnadirUsuario,
+			},
+			{
 				path: "categorias",
 				component: PAListadoCategorias,
 			},
@@ -53,16 +64,16 @@ const rutas = [
 				component: PAListadoProductos,
 			},
 			{
+				path: "editarProducto/:id",
+				component: EditarProducto,
+			},
+			{
+				path: "anadirProducto",
+				component: AnadirProducto,
+			},
+			{
 				path: "ventas",
 				component: PAListadoVentas,
-			},
-			{
-				path: "editarUsuario/:id",
-				component: EditarUsuario,
-			},
-			{
-				path: "anadirUsuario",
-				component: AnadirUsuario,
 			},
 		],
 	},

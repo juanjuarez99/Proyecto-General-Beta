@@ -39,7 +39,7 @@
 
 <script>
 export default {
-	name: "PAListado",
+	name: "PAListadoUsuarios",
 	data: () => ({
 		valores: [],
 		titulo: "Usuarios",

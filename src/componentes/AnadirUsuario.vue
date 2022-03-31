@@ -31,7 +31,7 @@
 					<option value="Usuario">Usuario</option>
 				</select>
 			</div>
-			<input type="sumbit" value="Añadir" />
+			<input type="submit" value="Añadir" />
 			<button @click="cancelar">Cancelar</button>
 		</form>
 	</div>

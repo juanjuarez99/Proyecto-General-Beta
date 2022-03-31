@@ -41,13 +41,14 @@ export default {
 	props: ["cat"],
 	data: () => ({
 		seleccionado: null,
+		valores: [],
 	}),
 	computed: {
-		valores() {
-			return store[this.cat];
-		},
 		keys() {
-			return Object.keys(this.valores[0]);
+			if (this.valores.length > 0) {
+				return Object.keys(this.valores[0]).filter((v) => v != "_id");
+			}
+			return [];
 		},
 		titulo() {
 			return this.cat.charAt(0).toUpperCase() + this.cat.slice(1);
@@ -58,7 +59,24 @@ export default {
 			store.app.admin.cambiaSeleccion("inicio");
 		},
 	},
+	mounted,
 };
+
+async function mounted() {
+	try {
+		const respuesta = await fetch(`/api/v1/${this.cat}`);
+		if (respuesta.ok) {
+			const valores = await respuesta.json();
+			this.valores = valores;
+		} else {
+			this.mensaje = "Ocurrió un error al conectar con la base de datos";
+			return;
+		}
+	} catch (err) {
+		this.mensaje = "Ocurrió un error al conectar con la base de datos";
+		return;
+	}
+}
 </script>
 
 <style scoped lang="scss">

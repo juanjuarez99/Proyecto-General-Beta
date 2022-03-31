@@ -20,16 +20,35 @@ import TarjetaCategoria from "./TarjetaCategoria";
 
 export default {
 	name: "PVCategorias",
-	props: ["categorias"],
 	components: {
 		TarjetaCategoria,
 	},
+	data: () => ({
+		categorias: [],
+	}),
 	methods: {
 		cambiaVista(vista) {
 			store.app.puntoventa.cambiaVista(vista);
 		},
 	},
+	mounted,
 };
+
+async function mounted() {
+	try {
+		const respuesta = await fetch(`/api/v1/categorias`);
+		if (respuesta.ok) {
+			const valores = await respuesta.json();
+			this.categorias = valores;
+		} else {
+			this.mensaje = "Ocurrió un error al conectar con la base de datos";
+			return;
+		}
+	} catch (err) {
+		this.mensaje = "Ocurrió un error al conectar con la base de datos";
+		return;
+	}
+}
 </script>
 
 <style scoped lang="scss"></style>

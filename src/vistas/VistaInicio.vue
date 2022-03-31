@@ -67,22 +67,40 @@ export default {
 		mensaje: "",
 	}),
 	methods: {
-		checarCredenciales(e) {
+		async checarCredenciales(e) {
 			e.preventDefault();
-			const usuario = store.usuarios.filter(
-				(u) => u.nombre === this.usuario && u.contrasena === this.contrasena
-			)[0];
-			if (!usuario) {
-				this.mensaje = "Usuario o contraseña incorrectos";
+			try {
+				const respuesta = await fetch("/api/v1/usuarios");
+				if (respuesta.ok) {
+					const usuarios = await respuesta.json();
+					const usuario = usuarios.filter(
+						(u) => u.nombre === this.usuario && u.contrasena === this.contrasena
+					)[0];
+					if (!usuario) {
+						this.mensaje = "Usuario o contraseña incorrectos";
+						return;
+					}
+
+					const r2 = await fetch("/api/v1/categorias");
+					if (r2.ok) {
+						const categorias = await r2.json();
+						store.anadirCategorias(categorias);
+					}
+
+					if (usuario.tipo === "Administrador") {
+						this.$router.push("/administracion");
+						return;
+					}
+
+					this.$router.push("/puntodeventa");
+				} else {
+					this.mensaje = "Ocurrió un error al conectar con la base de datos";
+					return;
+				}
+			} catch (err) {
+				this.mensaje = "Ocurrió un error al conectar con la base de datos";
 				return;
 			}
-
-			if (usuario.tipo === "Administrador") {
-				this.$router.push("/administracion");
-				return;
-			}
-
-			this.$router.push("/puntodeventa");
 		},
 	},
 };

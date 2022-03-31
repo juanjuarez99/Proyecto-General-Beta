@@ -29,10 +29,10 @@ import TarjetaProducto from "./TarjetaProducto";
 export default {
 	name: "PVProductos",
 	props: ["categoria"],
+	data: () => ({
+		productos: [],
+	}),
 	computed: {
-		productos() {
-			return store.productos.filter((p) => p.categoria === this.categoria);
-		},
 		nombreCategoria() {
 			return store.categorias.filter((c) => c.id === this.categoria)[0].nombre;
 		},
@@ -48,7 +48,26 @@ export default {
 	components: {
 		TarjetaProducto,
 	},
+	mounted,
 };
+
+async function mounted() {
+	try {
+		const respuesta = await fetch(
+			`/api/v1/categorias/${this.categoria}/productos`
+		);
+		if (respuesta.ok) {
+			const valores = await respuesta.json();
+			this.productos = valores;
+		} else {
+			this.mensaje = "Ocurrió un error al conectar con la base de datos";
+			return;
+		}
+	} catch (err) {
+		this.mensaje = "Ocurrió un error al conectar con la base de datos";
+		return;
+	}
+}
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 
 import VistaInicio from "../vistas/VistaInicio.vue";
 import VistaPuntoVenta from "../vistas/VistaPuntoVenta.vue";
 import VistaAdministracion from "../vistas/VistaAdministracion.vue";
+import VistaCobrar from "../vistas/VistaCobrar.vue";
 
 import PuntoVenta from "../componentes/PuntoVenta.vue";
 import PanelAdministracion from "../componentes/PanelAdministracion.vue";
@@ -35,10 +36,16 @@ const rutas = [
 			},
 		],
 	},
+	{
+		path: "/cobrar",
+		name: "Cobrar",
+		component: VistaCobrar,
+	},
 ];
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
+//	history: createWebHistory(process.env.BASE_URL),
+	history: createWebHashHistory(),
 	routes: rutas,
 });
 

@@ -34,7 +34,9 @@ export default {
 	}),
 	computed: {
 		nombreCategoria() {
-			return store.categorias.filter((c) => c.id === this.categoria)[0].nombre;
+			return store.categorias.filter((c) => c.id === this.categoria)
+				? store.categorias.filter((c) => c.id === this.categoria)[0].nombre
+				: "";
 		},
 	},
 	methods: {

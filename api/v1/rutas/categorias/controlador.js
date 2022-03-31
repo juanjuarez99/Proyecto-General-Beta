@@ -68,3 +68,18 @@ exports.del = async (req, res) => {
 		res.send({ error });
 	}
 };
+
+exports.getProductos = async (req, res) => {
+	try {
+		await bd.connect();
+		const respuesta = await bd
+			.db("cafeteria")
+			.collection("productos")
+			.find({ categoria: req.params.id });
+		const productos = await respuesta.toArray();
+		res.send(productos);
+		await bd.close();
+	} catch (error) {
+		res.send({ error });
+	}
+};
